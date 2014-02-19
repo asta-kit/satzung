@@ -1,0 +1,8 @@
+# TeX-Müll ignorieren
+*.aux
+*.log
+*.out
+*.toc
+
+# Fertige PDFs will man auch nicht mergen müssen
+*.pdf
