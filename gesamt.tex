@@ -1,4 +1,4 @@
-\documentclass[a4paper,parskip=half,pointlessnumbers,twocolumn]{scrartcl}  
+\documentclass[a4paper,parskip=half,pointlessnumbers,twocolumn]{scrbook}
 
 %%% rubber: module xelatex
 \usepackage{ifxetex}
@@ -12,17 +12,24 @@
 \fi
 
 \usepackage[ngerman]{babel}
-\usepackage{a4wide}
-\usepackage[juratotoc,ref=parlong,ref=nosentence]{scrjura}
+
+% Wir brauchen scrjura aus den koma-script-Klassen in mindestens Version 0.7
+% sonst werden auch einzelne Absätze nummeriert. Falls nicht vorhanden unter
+% http://mirrors.ctan.org/install/macros/latex/contrib/koma-script.tds.zip
+% runterladen und in ~/texmf/ entpacken (evtl. noch "texhash ~/texmf/" ausführen)
+\usepackage[juratotoc,ref=parlong,ref=nosentence]{scrjura}[2013/11/04]
+
 %\usepackage{tocstyle}
 %\usetocstyle{KOMAlike}
-\usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
-
 
 \setlength{\columnsep}{5mm}
 
 \usepackage{geometry}
-\geometry{left=26mm, right=25mm, top=23mm, bottom=33mm}
+%\geometry{left=26mm, right=25mm, top=23mm, bottom=33mm}
+\geometry{
+	includeheadfoot,
+	margin=2.54cm
+}
 
 \renewcommand{\thesection}{\alph{section})}
 
@@ -35,53 +42,34 @@
 \author{}
 \date{}
 
+\usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
 
 \begin{document}
 
-\pagestyle{empty}
 \maketitle
-\newpage 
-\rule{0mm}{0mm} \newpage % Für Printversion
-\rule{0mm}{0mm} \newpage % Für Printversion
 
-%\section*{Präambel:}
-\setcounter{page}{1}
-\pagestyle{plain}
-\tableofcontents \bigskip
+\tableofcontents
 
 Aufgrund von § 65 a Absatz 1 des Gesetzes über die Hochschulen in Baden-Württemberg (Landeshochschulgesetz -- LHG) in der Fassung vom 01. Januar 2005 (GBl. S. 1 f.), zuletzt geändert durch Artikel 2 des Gesetzes zur Einführung einer Verfassten Studierendenschaft und zur Stärkung der akademischen Weiterbildung (Verfasste-Studierendenschafts-Gesetz -- VerfStudG) in der Fassung vom 10. Juli 2012 (GBl. S. 457 ff.) hat die Studierendenschaft des KIT die nachstehende Organisationssatzung beschlossen.
 
-Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst. \bigskip
-
-\newpage
-
-\addtocontents{toc}{\protect\begin{center} Artikel 1 \\ Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)\medskip\protect\end{center}}
-{\begin{center} Artikel 1 \\ Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT) \end{center}}
-
-\begin{contract}
-\setcounter{Paragraph}{0}
-\input{vs-satzung.core.tex} \bigskip
-\end{contract}
+Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
 
 
-\addtocontents{toc}{\protect\begin{center} Artikel 2 \\ Wahl- und Abstimmungsordnung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)\medskip\protect\end{center}}
-{\begin{center} Artikel 2 \\ Wahl- und Abstimmungsordnung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT) \end{center}}
-
-\begin{contract}
-\setcounter{Paragraph}{0}
-\input{wahl-abstimmungsordnung.core.tex} \bigskip
-\end{contract}
 
 
-\addtocontents{toc}{\protect\begin{center}Artikel 3 \\ Übergangsbestimmungen\medskip\protect\end{center}}
-{\begin{center} Artikel 3 \\ Übergangsbestimmungen \end{center}}
+\part[Organisationssatzung]{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
 
-\begin{contract}
-\setcounter{Paragraph}{0}
+\input{vs-satzung.core.tex}
+
+
+\part[Wahl- und Abstimmungsordnung]{Wahl- und Abstimmungsordnung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
+
+\input{wahl-abstimmungsordnung.core.tex}
+
+
+\part{Übergangsbestimmungen}
+
 \input{uebergangsbestimmungen.core.tex}
-\end{contract}
-
-\rule{0mm}{0mm} \vspace{0mm} \rule{0mm}{0mm}
 
 %\fbox{
 %\begin{tabular}{ll}
