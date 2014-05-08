@@ -3,6 +3,7 @@
 *.log
 *.out
 *.toc
+*.synctex.gz
 
 # Fertige PDFs will man auch nicht mergen müssen
 *.pdf
