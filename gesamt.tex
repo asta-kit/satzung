@@ -1,4 +1,4 @@
-\documentclass[a4paper,parskip=half,numbers=noenddot,twocolumn]{scrbook}
+\documentclass[a4paper,parskip=half,numbers=noenddot,twocolumn,titlepage,twoside]{scrartcl}
 
 \synctex=1
 
@@ -21,9 +21,8 @@
 % runterladen und in ~/texmf/ entpacken (evtl. noch "texhash ~/texmf/" ausführen)
 \usepackage[juratotoc,juratocindent=0pt,ref=parlong,ref=nosentence]{scrjura}[2013/11/04]
 
-%\usepackage{tocstyle}
-%\usetocstyle{KOMAlike}
 
+% Setze Abstand zwischen Spalten
 \setlength{\columnsep}{5mm}
 
 \usepackage{geometry}
@@ -35,10 +34,28 @@
 
 \renewcommand{\thesection}{\alph{section})}
 
+% Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
 \renewcommand*{\thecontractSubParagraph}{%
-{\theParagraph\,\alph{contractSubParagraph})}}    % setzt einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen; ist so gewünscht
+{\theParagraph\,\alph{contractSubParagraph})}}
 
+% Größerer Abstand zwischen Paragraphennummer und -titel im Inhaltsverzeichnis
 \renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
+
+% Parts stehen bei scrartcl nicht auf einer eigenen Seite => Fix
+\renewcommand\partheadstartvskip{\cleardoublepage%
+	\thispagestyle{empty}%
+	\onecolumn%
+	\null\vfil%
+}
+\renewcommand\partheadmidvskip{\par\nobreak\vskip 20pt}
+\renewcommand\partheadendvskip{\vfil\newpage\twocolumn}
+\renewcommand\raggedpart{\centering}
+
+% Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
+% fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
+% Absatznummer eingefügt => definiere eigenen Befehl (macht es auch einfacher
+% wenn man doch wieder scrbook und chapters will)
+\newcommand{\jursection}[1]{\parnumberfalse\section{#1}\parnumbertrue}
 
 \title{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
 \author{}
@@ -46,9 +63,20 @@
 
 \usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
 
+% Sections sollten für jedes Dokument einzeln gezählt werden. Muss nach hyperref
+% passieren sonst sind die Links falsch.
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
+
 \begin{document}
 
+
+
 \maketitle
+
+% tableofcontents von scrartcl beginnt direkt => füge Vakatseiten ein
+\cleardoublepage
 
 \tableofcontents
 
