@@ -32,6 +32,12 @@
 	margin=2.54cm
 }
 
+% Setze Titel des Dokuments und Abschnitt (wenn vorhanden) als Kopfzeile
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\automark[part]{part}
+\automark*[section]{}
+
 \renewcommand{\thesection}{\Alph{section}}
 
 % Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
