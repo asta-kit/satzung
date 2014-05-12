@@ -1,4 +1,4 @@
-\documentclass[a4paper,parskip=half,numbers=noenddot,twocolumn,titlepage,twoside]{scrartcl}
+\documentclass[a4paper,parskip=half,numbers=noenddot,titlepage,twoside]{scrartcl}
 
 \synctex=1
 
@@ -21,7 +21,9 @@
 % runterladen und in ~/texmf/ entpacken (evtl. noch "texhash ~/texmf/" ausführen)
 \usepackage[juratotoc,juratocindent=0pt,ref=parlong,ref=nosentence]{scrjura}[2013/11/04]
 
-
+% Verwende multicol für den Zwei-Spalten-Satz
+% Erlaubt Umschaltung innerhalb der Seite und gleicht die Spalten aus
+\usepackage{multicol}
 % Setze Abstand zwischen Spalten
 \setlength{\columnsep}{5mm}
 
@@ -50,11 +52,10 @@
 % Parts stehen bei scrartcl nicht auf einer eigenen Seite => Fix
 \renewcommand\partheadstartvskip{\cleardoublepage%
 	\thispagestyle{empty}%
-	\onecolumn%
 	\null\vfil%
 }
 \renewcommand\partheadmidvskip{\par\nobreak\vskip 20pt}
-\renewcommand\partheadendvskip{\vfil\newpage\twocolumn}
+\renewcommand\partheadendvskip{\vfil\newpage}
 \renewcommand\raggedpart{\centering}
 
 % Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
@@ -84,7 +85,11 @@
 % tableofcontents von scrartcl beginnt direkt => füge Vakatseiten ein
 \cleardoublepage
 
+\begin{multicols}{2}
 \tableofcontents
+\end{multicols}
+
+\bigskip
 
 Aufgrund von § 65 a Absatz 1 des Gesetzes über die Hochschulen in Baden-Württemberg (Landeshochschulgesetz -- LHG) in der Fassung vom 01. Januar 2005 (GBl. S. 1 f.), zuletzt geändert durch Artikel 2 des Gesetzes zur Einführung einer Verfassten Studierendenschaft und zur Stärkung der akademischen Weiterbildung (Verfasste-Studierendenschafts-Gesetz -- VerfStudG) in der Fassung vom 10. Juli 2012 (GBl. S. 457 ff.) hat die Studierendenschaft des KIT die nachstehende Organisationssatzung beschlossen.
 
@@ -95,17 +100,23 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 
 \part[Organisationssatzung]{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
 
+\begin{multicols}{2}
 \input{vs-satzung.core.tex}
+\end{multicols}
 
 
 \part[Wahl- und Abstimmungsordnung]{Wahl- und Abstimmungsordnung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
 
+\begin{multicols}{2}
 \input{wahl-abstimmungsordnung.core.tex}
+\end{multicols}
 
 
 \part{Übergangsbestimmungen}
 
+\begin{multicols}{2}
 \input{uebergangsbestimmungen.core.tex}
+\end{multicols}
 
 %\fbox{
 %\begin{tabular}{ll}
