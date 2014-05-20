@@ -1,0 +1,127 @@
+%% Dieses LaTeX-File wird nur in die Unterordner gesymlinkt und kompiliert eine
+%% einzelne Ordnung
+
+\documentclass[
+	a4paper,
+	parskip=half,
+	numbers=noenddot,
+	titlepage,
+%	twoside,  % Benutze diese Optionen für Booklet-Layout
+%	BCOR=2mm, % Auskommentiert für bessere Bildschirmdarstellung
+	DIV=12,
+]{scrartcl}
+
+\synctex=1
+
+%%% rubber: module xelatex
+\usepackage{ifxetex}
+\ifxetex
+	\usepackage{fontspec}% provides font selecting commands 
+	%\setmainfont[Mapping=tex-text]{Adobe Garamond Pro}
+	%\setsansfont[Mapping=tex-text]{Myriad Pro}
+\else
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+\fi
+
+\usepackage[ngerman]{babel}
+
+% Wir brauchen scrjura aus den koma-script-Klassen in mindestens Version 0.7
+% sonst werden auch einzelne Absätze nummeriert. Falls nicht vorhanden unter
+% http://mirrors.ctan.org/install/macros/latex/contrib/koma-script.tds.zip
+% runterladen und in ~/texmf/ entpacken (evtl. noch "texhash ~/texmf/" ausführen)
+\usepackage[juratotoc,juratocindent=0pt,ref=parlong,ref=nosentence]{scrjura}[2013/11/04]
+
+% Verwende multicol für den Zwei-Spalten-Satz
+% Erlaubt Umschaltung innerhalb der Seite und gleicht die Spalten aus
+\usepackage{multicol}
+% Setze Abstand zwischen Spalten
+\setlength{\columnsep}{5mm}
+
+% Setze Titel des Dokuments und Abschnitt (wenn vorhanden) als Kopfzeile
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\automark[part]{part}
+\automark*[section]{}
+
+\renewcommand{\thesection}{\Alph{section}}
+
+% Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
+\renewcommand*{\thecontractSubParagraph}{%
+{\theParagraph\,\alph{contractSubParagraph})}}
+
+% Größerer Abstand zwischen Paragraphennummer und -titel im Inhaltsverzeichnis
+\renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
+
+% Parts stehen bei scrartcl nicht auf einer eigenen Seite => Fix
+\renewcommand\partheadstartvskip{\cleardoublepage%
+	\thispagestyle{empty}%
+	\null\vfil%
+}
+\renewcommand\partheadmidvskip{\par\nobreak\vskip 20pt}
+\renewcommand\partheadendvskip{\vfil\newpage}
+\renewcommand\raggedpart{\centering}
+
+% Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
+% fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
+% Absatznummer eingefügt => definiere eigenen Befehl (macht es auch einfacher
+% wenn man doch wieder scrbook und chapters will)
+\newcommand{\jursection}[1]{\parnumberfalse\section{#1}\parnumbertrue}
+
+\title{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
+\author{}
+\date{}
+
+\usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
+
+% Sections sollten für jedes Dokument einzeln gezählt werden. Muss nach hyperref
+% passieren sonst sind die Links falsch.
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
+
+\begin{document}
+
+
+
+\maketitle
+
+% tableofcontents von scrartcl beginnt direkt => füge Vakatseiten ein
+\cleardoublepage
+
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+
+\bigskip
+
+Aufgrund von § 65 a Absatz 1 des Gesetzes über die Hochschulen in Baden-Württemberg (Landeshochschulgesetz -- LHG) in der Fassung vom 01. Januar 2005 (GBl. S. 1 f.), zuletzt geändert durch Artikel 2 des Gesetzes zur Einführung einer Verfassten Studierendenschaft und zur Stärkung der akademischen Weiterbildung (Verfasste-Studierendenschafts-Gesetz -- VerfStudG) in der Fassung vom 10. Juli 2012 (GBl. S. 457 ff.) hat die Studierendenschaft des KIT die nachstehende Organisationssatzung beschlossen.
+
+Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
+
+
+
+
+\part[Organisationssatzung]{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
+
+\begin{multicols}{2}
+\input{document.core.tex}
+\end{multicols}
+
+
+%%% Impressum %%%
+\vspace*{\fill}
+\section*{Impressum}
+\begin{tabular}{rl}
+	Herausgeber & AStA am KIT \\
+	Telefon & 0721/608-48460 \\
+	Web & \url{www.asta-kit.de} \\
+	E-Mail & \href{mailto:info@usta.de}{info@usta.de}\\
+	V.i.S.d.P. & Vera Schumacher\\
+	Druck & Studierenden Service Verein (SSV)\\
+	Nachdruck & 150 Exemplare\\
+	Stand: & 11.02.2013 (Veröffentlichungsdatum in den\\
+& amtlichen Bekanntmachungen des KIT)
+\end{tabular}
+
+\end{document}
