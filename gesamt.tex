@@ -41,6 +41,10 @@
 \automark[part]{part}
 \automark*[section]{}
 
+% Für leichteres Programmieren
+\usepackage{xifthen}
+
+% Großbuchstaben für die Untergliederungen
 \renewcommand{\thesection}{\Alph{section}}
 
 % Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
@@ -97,27 +101,33 @@ Aufgrund von § 65 a Absatz 1 des Gesetzes über die Hochschulen in Baden-Württ
 Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
 
 
+% Mit diesem Kommando wird der Dokumenttitel gesetzt. Geht nicht das in dem Environment zu machen weil man da drin nicht das \begin{document} gesetzt werden kann und der Titel von den Einzelversionen schon in der Präambel gesetzt werden muss
+
+% Dummy damit renewcommand funktioniert
+\newcommand{\shorttitle}{}
+
+\newcommand{\jurtitle}[2][]{%
+\ifthenelse{\isempty{#1}}{\renewcommand{\shorttitle}{#2}}{\renewcommand{\shorttitle}{#1}}%
+\part[\shorttitle]{#2}
+}
 
 
-\part[Organisationssatzung]{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
+% Diese Umgebung umschließt das eigentliche Dokument
+\newenvironment{jurdoc}{% begin{jurdoc}
+\begin{multicols}{2}%
+\begin{contract}%
+\setcounter{Paragraph}{0}%
+\setcounter{juratoclevel}{1}%
+%
+}{% end{jurdoc}
+\end{contract}%
+\end{multicols}%
+}% Ende von jurdoc
 
-\begin{multicols}{2}
+
 \input{vs-satzung/document.core.tex}
-\end{multicols}
-
-
-\part[Wahl- und Abstimmungsordnung]{Wahl- und Abstimmungsordnung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
-
-\begin{multicols}{2}
 \input{wahl-abstimmungsordnung/document.core.tex}
-\end{multicols}
-
-
-\part{Übergangsbestimmungen}
-
-\begin{multicols}{2}
 \input{vs-uebergangsbestimmungen/document.core.tex}
-\end{multicols}
 
 
 %%% Impressum %%%
