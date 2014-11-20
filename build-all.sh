@@ -21,3 +21,6 @@ do
 		"$basedir/build.sh" "${args[@]}"
 	fi
 done
+
+args=("$@" "$basedir/gesamt.tex")
+"$basedir/build.sh" "${args[@]}"
