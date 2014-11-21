@@ -51,14 +51,6 @@
 % Größerer Abstand zwischen Paragraphennummer und -titel im Inhaltsverzeichnis
 \renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
 
-% Parts stehen bei scrartcl nicht auf einer eigenen Seite => Fix
-\renewcommand\partheadstartvskip{\cleardoublepage%
-	\thispagestyle{empty}%
-	\null\vfil%
-}
-\renewcommand\partheadmidvskip{\par\nobreak\vskip 20pt}
-\renewcommand\partheadendvskip{\vfil\newpage}
-\renewcommand\raggedpart{\centering}
 
 % Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
 % fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
@@ -69,30 +61,43 @@
 
 \usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
 
-% Sections sollten für jedes Dokument einzeln gezählt werden. Muss nach hyperref
-% passieren sonst sind die Links falsch.
-\makeatletter
-\@addtoreset{section}{part}
-\makeatother
 
-\author{}
-\date{}
+% Befehle für Metainformationen
+\makeatletter
+\newcommand*{\@stupadate}{Noch nicht beschlossen}
+\newcommand*{\@publishdate}{Noch nicht veröffentlicht}
+\newcommand*{\@jurchanges}{Noch nicht veröffentlicht}
+\newcommand*{\stupadate}[1]{\renewcommand*{\@stupadate}{#1}}
+\newcommand*{\publishdate}[1]{\renewcommand*{\@publishdate}{#1}}
+\newcommand*{\jurchanges}[1]{\renewcommand*{\@jurchanges}{Eingearbeitete Änderungen:\begin{itemize}#1\end{itemize}}}
 
 
 % Mit diesem Kommando wird der Dokumenttitel gesetzt. Geht nicht das in dem Environment zu machen weil man da drin nicht das \begin{document} gesetzt werden kann und der Titel schon in der Präambel gesetzt werden muss
 \newcommand{\jurtitle}[2][]{
-\ifthenelse{\isempty{#1}}{\newcommand{\shorttitle}{#2}}{\newcommand{\shorttitle}{#1}}
+\ifthenelse{\isempty{#1}}{\def\shorttitle{#2}}{\def\shorttitle{#1}}
 
 \title{#2}
+\author{}
+\date{
+	\begin{tabular}{ll}
+	Beschluss: & \@stupadate \\
+	Veröffentlichung: & \@publishdate \\
+	\end{tabular}
+}
 
 % Setze Titel des Dokuments als Kopfzeile
 \usepackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
-\cohead{\shorttitle}
+\lohead{\shorttitle}
+\rohead{Beschlossen: \@stupadate}
 
 \begin{document}
 
 \maketitle
+
+\@jurchanges
+
+Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
 
 \begin{multicols}{2}
 \tableofcontents
@@ -113,9 +118,10 @@
 \end{multicols}%
 }% Ende von jurdoc
 
+\makeatother
+
 
 \input{document.core.tex}
 
 
-\input{../impressum.tex}
 \end{document}

@@ -55,13 +55,16 @@
 \renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
 
 % Parts stehen bei scrartcl nicht auf einer eigenen Seite => Fix
+\makeatletter
 \renewcommand\partheadstartvskip{\cleardoublepage%
 	\thispagestyle{empty}%
 	\null\vfil%
 }
+\newcommand*{\setpartpreamble}[1]{\def\@partpreamble{#1}}
 \renewcommand\partheadmidvskip{\par\nobreak\vskip 20pt}
-\renewcommand\partheadendvskip{\vfil\newpage}
+\renewcommand\partheadendvskip{\bigskip\@partpreamble\vfil\newpage}
 \renewcommand\raggedpart{\centering}
+\makeatother
 
 % Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
 % fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
@@ -71,7 +74,7 @@
 
 \title{Organisationssatzung \\ der Verfassten Studierendenschaft \\ des Karlsruher Instituts für Technologie (KIT)}
 \author{}
-\date{}
+\date{Stand: 4. Februar 2013\\(amtliche Bekanntmachung)}
 
 \usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
 
@@ -101,13 +104,30 @@ Aufgrund von § 65 a Absatz 1 des Gesetzes über die Hochschulen in Baden-Württ
 Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
 
 
+% Befehle für Metainformationen
+\makeatletter
+\newcommand*{\@stupadate}{Noch nicht beschlossen}
+\newcommand*{\@publishdate}{Noch nicht veröffentlicht}
+\newcommand*{\@jurchanges}{Noch nicht veröffentlicht}
+\newcommand*{\stupadate}[1]{\renewcommand*{\@stupadate}{#1}}
+\newcommand*{\publishdate}[1]{\renewcommand*{\@publishdate}{#1}}
+\newcommand*{\jurchanges}[1]{\renewcommand*{\@jurchanges}{Eingearbeitete Änderungen:\begin{itemize}#1\end{itemize}}}
+
+
 % Mit diesem Kommando wird der Dokumenttitel gesetzt. Geht nicht das in dem Environment zu machen weil man da drin nicht das \begin{document} gesetzt werden kann und der Titel von den Einzelversionen schon in der Präambel gesetzt werden muss
-
-% Dummy damit renewcommand funktioniert
-\newcommand{\shorttitle}{}
-
 \newcommand{\jurtitle}[2][]{%
-\ifthenelse{\isempty{#1}}{\renewcommand{\shorttitle}{#2}}{\renewcommand{\shorttitle}{#1}}%
+\ifthenelse{\isempty{#1}}{\def\shorttitle{#2}}{\def\shorttitle{#1}}%
+\setpartpreamble{%
+	\begin{center}
+		\Large
+		\begin{tabular}{ll}
+		Beschluss: & \@stupadate \\
+		Veröffentlichung: & \@publishdate \\
+		\end{tabular}
+	\end{center}
+	\vfil
+	\@jurchanges
+}
 \part[\shorttitle]{#2}
 }
 
@@ -123,6 +143,8 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 \end{contract}%
 \end{multicols}%
 }% Ende von jurdoc
+
+\makeatother
 
 
 \input{vs-satzung/document.core.tex}
