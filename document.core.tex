@@ -1,0 +1,39 @@
+% Muster für die Satzungsdokumente
+
+\stupadate{} % Hier trägt man das Datum des Beschlusses im StuPa ein
+\publishdate{} % Hier trägt man das Datum der Bekanntmachung/des Inkrafttreten ein
+\jurchanges{
+	% Hier trägt man die Änderungen ein die eingearbeitet wurden
+	%\item Amtliche Bekanntmachung 2013 KIT 004 vom 04.02.2013
+	%\item Amtliche Bekanntmachung 2014 KIT 021 vom 02.05.2014
+}
+
+% Hier kommt der Titel des Dokuments. In eckigen Klammern falls benötigt ein
+% Kurztitel der dann statt des langen in Kopfzeilen oder im Inhaltsverzeichnis
+% angezeigt wird
+\jurtitle[Kurztitel]{Langer Titel\\des Dokuments}
+
+% Hier beginnt das eigentliche Dokument
+\begin{jurdoc}
+
+\Paragraph{title={Erster Paragraph}}\label{neues_dokument:erster_paragraph}
+% Die Labels sind nützlich für Verweise, da kann man dann mit \ref{} drauf verweisen
+Erster Absatz
+
+Zweiter Absatz\label{neues_dokument:erster_paragraph:toller_absatz}
+
+
+\Paragraph{title={Noch ein Paragraph}}\label{neues_dokument:anderer_paragraph}
+Und hier kommt jetzt ein Verweis auf den ersten Paragraphen \ref{neues_dokument:erster_paragraph} und noch spezieller kann man direkt auf den Absatz verweisen \ref{neues_dokument:erster_paragraph:toller_absatz}.
+
+Dieser Absatz hat jetzt eine Aufzählung:
+\begin{enumerate}
+	\item Erstes Ding,
+	\item Zweites Ding und
+	\item das letzte Ding.
+\end{enumerate}
+
+
+
+% Hier ist das Dokument zu Ende
+\end{jurdoc}

@@ -29,3 +29,21 @@ Außer rubber für das Build-Skript brauchst du noch folgende LaTeX-Pakete:
 Was ist wenn meine KomaScript-Version zu alt ist?
 -------------------------------------------------
 Dann einfach von http://mirrors.ctan.org/install/macros/latex/contrib/koma-script.tds.zip herunterladen und im Home-Verzeichnis unter dem Ordner "texmf" entpacken (den muss man evtl. anlegen wenn er noch nicht vorhanden ist). Dann `texhash ~/texmf/` ausführen.
+
+
+Wie lege ich ein neues Dokument an?
+-----------------------------------
+1. Neuen Unterordner anlegen, z.B. "sumpf-ordnung"
+2. In einem Terminal mit `cd` in diesen Unterordner wechseln
+```
+cd /foo/bar/satzung/sumpf-ordnung
+```
+3. Das Rahmen-Dokument für das Einzeldokument anlegen
+```
+ln -s ../einzel.grundgeruest.tex sumpf-ordnung.tex
+```
+4. Das Dokument anlegen indem man das Template kopiert
+```
+cp ../document.core.tex ./
+```
+5. (Optional) Wenn das Dokument ein zentrale Satzung ist dann im gesamt.tex im Hauptordner noch das Unterdokument mit `\input{sumpf-ordnung/document.core.tex}` einbinden.
