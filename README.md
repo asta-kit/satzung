@@ -12,7 +12,7 @@ Dafür gibt es das build-all.sh-Skript. Unter Linux einfach ein Terminal starten
 
 Das Skript akzeptiert alle Parameter die rubber auch akzeptiert (siehe `man rubber`). Zum Beispiel `-W refs -W misc` um Warnungen zu nicht auflösbaren Referenzen und andere allgemeine Warnungen auszugeben oder `-W all` um alle Warnungen auszugeben.
 
-Um nur eine einzelne Ordnung zu kompilieren kann man `./build.sh <pfad-zum.tex>` ausführen.
+Um nur eine einzelne Ordnung zu kompilieren kann man `./build.sh <ordnung>` ausführen.
 
 
 Was ist wenn ich kein rubber installiert habe?

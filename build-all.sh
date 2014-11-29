@@ -17,10 +17,10 @@ for direntry in "$basedir"/*
 do
 	if [ -d "$direntry" ]
 	then
-		args=("$@" "$direntry/$(basename "$direntry").tex")
+		args=("$@" "$(basename "$direntry")")
 		"$basedir/build.sh" "${args[@]}"
 	fi
 done
 
-args=("$@" "$basedir/gesamt.tex")
+args=("$@" "gesamt")
 "$basedir/build.sh" "${args[@]}"
