@@ -58,8 +58,17 @@
 % wenn man doch wieder scrbook und chapters will)
 \newcommand{\jursection}[1]{\parnumberfalse\section{#1}\parnumbertrue}
 
+% Dieses Kommando setzt einen Paragraphen
+% Eigentlich gibt es dazu \Paragraph aus scrjura aber das hat eine komische Argument-Syntax weshalb das nicht ganz so gut mit latexdiff zusammen zu bringen ist und auch irgendwie doof zu benutzen ist. Dieses Kommando reicht eigentlich alle Parameter einfach nur an scrjura weiter aber nimmt den Titel als normales Argument und erlaubt weitere Argumente im optionalen Argument zu übergeben
+\newcommand{\jurparagraph}[2][]{%
+\ifthenelse{\isempty{#2}}{\Paragraph{#1}}{\Paragraph{title={#2}, #1}}%
+}
+\newcommand{\jursubparagraph}[2][]{%
+\ifthenelse{\isempty{#2}}{\SubParagraph{#1}}{\SubParagraph{title={#2}, #1}}%
+}
 
-\usepackage[pdfusetitle, pdfborder={0 0 0}]{hyperref}
+
+\usepackage[unicode, pdfusetitle, pdfborder={0 0 0}, bookmarksnumbered]{hyperref}
 
 
 % Befehle für Metainformationen
