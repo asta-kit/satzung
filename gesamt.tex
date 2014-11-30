@@ -49,7 +49,7 @@
 
 % Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
 \renewcommand*{\thecontractSubParagraph}{%
-{\theParagraph\,\alph{contractSubParagraph})}}
+{\theParagraph\texorpdfstring{\,}{}\alph{contractSubParagraph})}}
 
 % Größerer Abstand zwischen Paragraphennummer und -titel im Inhaltsverzeichnis
 \renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
