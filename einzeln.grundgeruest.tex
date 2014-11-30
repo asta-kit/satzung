@@ -80,10 +80,17 @@
 \newcommand*{\publishdate}[1]{\renewcommand*{\@publishdate}{#1}}
 \newcommand*{\jurchanges}[1]{\renewcommand*{\@jurchanges}{Eingearbeitete Änderungen:\begin{itemize}#1\end{itemize}}}
 
+% Setze Titel des Dokuments als Kopfzeile
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\def\@jurshorttitle{}
+\lohead{\@jurshorttitle}
+\rohead{Beschlossen: \@stupadate}
 
-% Mit diesem Kommando wird der Dokumenttitel gesetzt. Geht nicht das in dem Environment zu machen weil man da drin nicht das \begin{document} gesetzt werden kann und der Titel schon in der Präambel gesetzt werden muss
-\newcommand{\jurtitle}[2][]{
-\ifthenelse{\isempty{#1}}{\def\shorttitle{#2}}{\def\shorttitle{#1}}
+
+% Diese Umgebung umschließt das eigentliche Dokument. Argument ist der Titel, optional noch ein Kurztitel
+\newenvironment{jurdoc}[2][]{% begin{jurdoc}
+\ifthenelse{\isempty{#1}}{\def\@jurshorttitle{#2}}{\def\@jurshorttitle{#1}}
 
 \title{#2}
 \author{}
@@ -94,13 +101,6 @@
 	\end{tabular}
 }
 
-% Setze Titel des Dokuments als Kopfzeile
-\usepackage{scrlayer-scrpage}
-\pagestyle{scrheadings}
-\lohead{\shorttitle}
-\rohead{Beschlossen: \@stupadate}
-
-\begin{document}
 
 \maketitle
 
@@ -113,11 +113,7 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 \end{multicols}
 
 \bigskip
-}% Ende von \jurtitle
 
-
-% Diese Umgebung umschließt das eigentliche Dokument
-\newenvironment{jurdoc}{% begin{jurdoc}
 \begin{multicols}{2}%
 \begin{contract}%
 \setcounter{Paragraph}{0}%
@@ -128,6 +124,8 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 }% Ende von jurdoc
 
 \makeatother
+
+\begin{document}
 
 
 \input{document.core.tex}

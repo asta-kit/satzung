@@ -124,9 +124,10 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 \newcommand*{\jurchanges}[1]{\renewcommand*{\@jurchanges}{Eingearbeitete Änderungen:\begin{itemize}#1\end{itemize}}}
 
 
-% Mit diesem Kommando wird der Dokumenttitel gesetzt. Geht nicht das in dem Environment zu machen weil man da drin nicht das \begin{document} gesetzt werden kann und der Titel von den Einzelversionen schon in der Präambel gesetzt werden muss
-\newcommand{\jurtitle}[2][]{%
-\ifthenelse{\isempty{#1}}{\def\shorttitle{#2}}{\def\shorttitle{#1}}%
+% Diese Umgebung umschließt das eigentliche Dokument. Argument ist der Titel, optional noch ein Kurztitel
+\newenvironment{jurdoc}[2][]{% begin{jurdoc}
+\ifthenelse{\isempty{#1}}{\def\@jurshorttitle{#2}}{\def\@jurshorttitle{#1}}
+
 \setpartpreamble{%
 	\begin{center}
 		\Large
@@ -138,12 +139,8 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 	\vfil
 	\@jurchanges
 }
-\part[\shorttitle]{#2}
-}
+\part[\@jurshorttitle]{#2}
 
-
-% Diese Umgebung umschließt das eigentliche Dokument
-\newenvironment{jurdoc}{% begin{jurdoc}
 \begin{multicols}{2}%
 \begin{contract}%
 \setcounter{Paragraph}{0}%
