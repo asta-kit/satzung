@@ -122,10 +122,10 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 \makeatother
 
 % DIF Präambel für latexdiff
-\RequirePackage[normalem]{ulem}
+\RequirePackage{soul}
 \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
-\DeclareRobustCommand{\DIFaddtex}[1]{{\color{blue}\uwave{#1}}\linebreak[0]}
-\DeclareRobustCommand{\DIFdeltex}[1]{{\color{red}\sout{#1}}\linebreak[0]}
+\DeclareRobustCommand{\DIFaddtex}[1]{{\color{blue}\ul{#1}}\linebreak[0]}
+\DeclareRobustCommand{\DIFdeltex}[1]{{\color{red}\st{#1}}\linebreak[0]}
 
 \providecommand{\DIFaddbegin}{}
 \providecommand{\DIFaddend}{}
