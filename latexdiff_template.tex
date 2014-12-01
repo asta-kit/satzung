@@ -1,0 +1,152 @@
+%% Diese Datei dient dazu Diffs aus latex zu generieren. Sie wird mit dem
+%% latexdiff.sh-Skript benutzt
+
+\documentclass[
+	a4paper,
+	parskip=half,
+	numbers=noenddot,
+%	titlepage,
+%	twoside,  % Benutze diese Optionen für Booklet-Layout
+%	BCOR=2mm, % Auskommentiert für bessere Bildschirmdarstellung
+	DIV=12,
+]{scrartcl}
+
+\synctex=1
+
+%%% rubber: module xelatex
+\usepackage{ifxetex}
+\ifxetex
+	\usepackage{fontspec}% provides font selecting commands
+	%\setmainfont[Mapping=tex-text]{Adobe Garamond Pro}
+	%\setsansfont[Mapping=tex-text]{Myriad Pro}
+\else
+	\usepackage[T1]{fontenc}
+	\usepackage[utf8]{inputenc}
+\fi
+
+\usepackage[ngerman]{babel}
+
+% Wir brauchen scrjura aus den koma-script-Klassen in mindestens Version 0.7
+% sonst werden auch einzelne Absätze nummeriert. Falls nicht vorhanden unter
+% http://mirrors.ctan.org/install/macros/latex/contrib/koma-script.tds.zip
+% runterladen und in ~/texmf/ entpacken (evtl. noch "texhash ~/texmf/" ausführen)
+\usepackage[juratotoc,juratocindent=0pt,ref=parlong,ref=nosentence]{scrjura}[2013/11/04]
+
+% Verwende multicol für den Zwei-Spalten-Satz
+% Erlaubt Umschaltung innerhalb der Seite und gleicht die Spalten aus
+\usepackage{multicol}
+% Setze Abstand zwischen Spalten
+\setlength{\columnsep}{5mm}
+
+% Für leichteres Programmieren
+\usepackage{xifthen}
+
+% Für "schöne" Brüche, z.B. bei 2/3-Mehrheit
+\usepackage{xfrac}
+
+% Großbuchstaben für die Untergliederungen
+\renewcommand{\thesection}{\Alph{section}}
+
+% Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
+\renewcommand*{\thecontractSubParagraph}{%
+{\theParagraph\texorpdfstring{\,}{}\alph{contractSubParagraph}}}
+
+% Größerer Abstand zwischen Paragraphennummer und -titel im Inhaltsverzeichnis
+\renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
+
+
+% Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
+% fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
+% Absatznummer eingefügt => definiere eigenen Befehl (macht es auch einfacher
+% wenn man doch wieder scrbook und chapters will)
+\newcommand{\jursection}[1]{\parnumberfalse\section{#1}\parnumbertrue}
+
+% Dieses Kommando setzt einen Paragraphen
+% Eigentlich gibt es dazu \Paragraph aus scrjura aber das hat eine komische Argument-Syntax weshalb das nicht ganz so gut mit latexdiff zusammen zu bringen ist und auch irgendwie doof zu benutzen ist. Dieses Kommando reicht eigentlich alle Parameter einfach nur an scrjura weiter aber nimmt den Titel als normales Argument und erlaubt weitere Argumente im optionalen Argument zu übergeben
+\newcommand{\jurparagraph}[2][]{%
+\ifthenelse{\isempty{#2}}{\Paragraph{#1}}{\Paragraph{title={#2}, #1}}%
+}
+\newcommand{\jursubparagraph}[2][]{%
+\ifthenelse{\isempty{#2}}{\SubParagraph{#1}}{\SubParagraph{title={#2}, #1}}%
+}
+
+
+\usepackage[unicode, pdfusetitle, pdfborder={0 0 0}, bookmarksnumbered]{hyperref}
+\author{}
+
+
+% Befehle für Metainformationen
+\makeatletter
+\newcommand*{\@stupadate}{Noch nicht beschlossen}
+\newcommand*{\@publishdate}{Noch nicht veröffentlicht}
+\newcommand*{\@jurchanges}{Noch nicht veröffentlicht}
+\newcommand*{\stupadate}[1]{\renewcommand*{\@stupadate}{#1}}
+\newcommand*{\publishdate}[1]{\renewcommand*{\@publishdate}{#1}}
+\newcommand*{\jurchanges}[1]{\renewcommand*{\@jurchanges}{Eingearbeitete Änderungen:\begin{itemize}#1\end{itemize}}}
+
+
+% Diese Umgebung umschließt das eigentliche Dokument. Argument ist der Titel, optional noch ein Kurztitel
+\newenvironment{jurdoc}[2][]{% begin{jurdoc}
+\ifthenelse{\isempty{#1}}{\def\@jurshorttitle{#2}}{\def\@jurshorttitle{#1}}
+
+\title{Änderungen zur \@jurshorttitle}
+
+\maketitle
+
+\begin{center}
+	\begin{tabular}{ll}
+		Beschluss: & \@stupadate \\
+		Veröffentlichung: & \@publishdate \\
+	\end{tabular}
+\end{center}
+
+\@jurchanges
+
+Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
+
+\begin{multicols}{2}
+\tableofcontents
+\end{multicols}
+
+\bigskip
+
+\begin{multicols}{2}%
+\begin{contract}%
+\setcounter{Paragraph}{0}%
+%
+}{% end{jurdoc}
+\end{contract}%
+\end{multicols}%
+}% Ende von jurdoc
+
+\makeatother
+
+% DIF Präambel für latexdiff
+\RequirePackage[normalem]{ulem}
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
+\DeclareRobustCommand{\DIFaddtex}[1]{{\color{blue}\uwave{#1}}\linebreak[0]}
+\DeclareRobustCommand{\DIFdeltex}[1]{{\color{red}\sout{#1}}\linebreak[0]}
+
+\providecommand{\DIFaddbegin}{}
+\providecommand{\DIFaddend}{}
+\providecommand{\DIFdelbegin}{}
+\providecommand{\DIFdelend}{}
+
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}}
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}}
+\providecommand{\DIFaddbeginFL}{}
+\providecommand{\DIFaddendFL}{}
+\providecommand{\DIFdelbeginFL}{}
+\providecommand{\DIFdelendFL}{}
+
+\providecommand{\DIFadd}[1]{\texorpdfstring{\DIFaddtex{#1}}{#1}}
+\providecommand{\DIFdel}[1]{\texorpdfstring{\DIFdeltex{#1}}{}}
+
+
+\begin{document}
+
+
+\input{document.core.diff.tex}
+
+
+\end{document}

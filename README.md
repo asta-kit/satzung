@@ -20,10 +20,20 @@ Was ist wenn ich kein rubber installiert habe?
 Wenn du auf deinem System kein rubber installieren kannst oder möchtest, dann kannst du auch einfach xelatex oder pdflatex verwenden. Bei pdflatex sehen die Überschriften etwas hässlicher aus. Du kannst dann nicht das Build-Skript benutzen sondern musst jede Ordnung einzeln kompilieren.
 
 
+Wie kann man sich die Änderungen zwischen zwei Versionen anzeigen lassen?
+-------------------------------------------------------------------------
+Um Änderungen zwischen LaTeX-Dateien anzuzeigen, gibt es das tolle Programm `latexdiff`. Aber weil die Ordnungen etwas kompliziertere Dinge tun muss man dem sehr viele Optionen mitgeben. Daher liefern wir ein Skript `latexdiff.sh` mit, dass das übernimmt.
+
+Einfach mit `cd <ordner>` in den Ordner wechseln wo diese Anleitung liegt und dann `./latexdiff.sh <alt> <neu> <ordnung>` ausführen. Dabei fügt man statt `<alt>` den Namen für die alte Version und statt `<neu>` den Namen für die neuere Version ein. Falls man die neuere Version weg lässt wird mit dem aktuellen Zustand der Datei verglichen und falls man auch noch die alte Version weglässt wird die aktuelle Version im Repository (HEAD) als Grundlage genommen. Die Grundform `./latexdiff.sh <ordnung>` zeigt also einfach an was man, seit dem man die Ordnung das letzte mal committed (in die Versionsverwaltung eingetragen) hat, geändert hat.
+
+Wenn man kein rubber installiert hat gibt das Skript einen Fehler aus, sagt aber wo es die Dateien abgelegt hat. In dem Ordner dann einfach mit xelatex oder pdflatex kompilieren.
+
+
 Welche Dinge brauche ich um die Satzungen zu kompilieren?
 ---------------------------------------------------------
-Außer rubber für das Build-Skript brauchst du noch folgende LaTeX-Pakete:
 - koma-script midestens Version 0.7 (im texlive-latex-recommended Paket)
+- rubber für das Build-Skript (optional)
+- latexdiff-git für das latexdiff-Skript (optional, latexdiff-git ist oft bei latexdiff mit dabei)
 
 
 Was ist wenn meine KomaScript-Version zu alt ist?
