@@ -61,7 +61,7 @@
 % fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
 % Absatznummer eingefügt => definiere eigenen Befehl (macht es auch einfacher
 % wenn man doch wieder scrbook und chapters will)
-\newcommand{\jursection}[1]{\parnumberfalse\section{#1}\parnumbertrue}
+\newcommand{\jursection}[1]{\setcounter{juratoclevel}{2}\parnumberfalse\section{#1}\parnumbertrue}
 
 % Dieses Kommando setzt einen Paragraphen
 % Eigentlich gibt es dazu \Paragraph aus scrjura aber das hat eine komische Argument-Syntax weshalb das nicht ganz so gut mit latexdiff zusammen zu bringen ist und auch irgendwie doof zu benutzen ist. Dieses Kommando reicht eigentlich alle Parameter einfach nur an scrjura weiter aber nimmt den Titel als normales Argument und erlaubt weitere Argumente im optionalen Argument zu übergeben
