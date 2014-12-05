@@ -1,58 +1,13 @@
-\documentclass[
-	a4paper,
-	parskip=half,
-	numbers=noenddot,
-	titlepage,
-%	twoside,  % Benutze diese Optionen für Booklet-Layout
-%	BCOR=2mm, % Auskommentiert für bessere Bildschirmdarstellung
-	DIV=12,
-]{scrartcl}
+% Gemeinsame Prämbel
+\input{common_preamble.tex}
 
-\synctex=1
-
-%%% rubber: module xelatex
-\usepackage{ifxetex}
-\ifxetex
-	\usepackage{fontspec}% provides font selecting commands
-	%\setmainfont[Mapping=tex-text]{Adobe Garamond Pro}
-	%\setsansfont[Mapping=tex-text]{Myriad Pro}
-\else
-	\usepackage[T1]{fontenc}
-	\usepackage[utf8]{inputenc}
-\fi
-
-\usepackage[ngerman]{babel}
-
-% Wir brauchen scrjura aus den koma-script-Klassen in mindestens Version 0.7
-% sonst werden auch einzelne Absätze nummeriert. Falls nicht vorhanden unter
-% http://mirrors.ctan.org/install/macros/latex/contrib/koma-script.tds.zip
-% runterladen und in ~/texmf/ entpacken (evtl. noch "texhash ~/texmf/" ausführen)
-\usepackage[juratotoc,juratocindent=0pt,ref=parlong,ref=nosentence]{scrjura}[2013/11/04]
-
-% Verwende multicol für den Zwei-Spalten-Satz
-% Erlaubt Umschaltung innerhalb der Seite und gleicht die Spalten aus
-\usepackage{multicol}
-% Setze Abstand zwischen Spalten
-\setlength{\columnsep}{5mm}
+\KOMAoptions{titlepage}
 
 % Setze Titel des Dokuments und Abschnitt (wenn vorhanden) als Kopfzeile
 \usepackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \automark[part]{part}
 \automark*[section]{}
-
-% Für leichteres Programmieren
-\usepackage{xifthen}
-
-% Großbuchstaben für die Untergliederungen
-\renewcommand{\thesection}{\Alph{section}}
-
-% Setze einen kleinen Abstand \, zwischen Zahl und Buchstabe bei Paragraphen
-\renewcommand*{\thecontractSubParagraph}{%
-{\theParagraph\texorpdfstring{\,}{}\alph{contractSubParagraph})}}
-
-% Größerer Abstand zwischen Paragraphennummer und -titel im Inhaltsverzeichnis
-\renewcommand{\numberline}[1]{\makebox[2.5em][l]{#1}}
 
 % Parts stehen bei scrartcl nicht auf einer eigenen Seite => Fix
 \makeatletter
@@ -67,32 +22,8 @@
 \makeatother
 
 
-% Für "schöne" Brüche, z.B. bei 2/3-Mehrheit
-\usepackage{nicefrac}
-\newcommand{\eindrittel}{\nicefrac{1}{3}}
-\newcommand{\zweidrittel}{\nicefrac{2}{3}}
-
-% Aus irgendeinem Grund werden chapters nicht als Absatz in einem Paragraphen
-% fehlinterpretiert sections aber schon und dementsprechend wird vor ihnen eine
-% Absatznummer eingefügt => definiere eigenen Befehl (macht es auch einfacher
-% wenn man doch wieder scrbook und chapters will)
-\newcommand{\jursection}[1]{\setcounter{juratoclevel}{2}\parnumberfalse\section{#1}\parnumbertrue}
-
-% Dieses Kommando setzt einen Paragraphen
-% Eigentlich gibt es dazu \Paragraph aus scrjura aber das hat eine komische Argument-Syntax weshalb das nicht ganz so gut mit latexdiff zusammen zu bringen ist und auch irgendwie doof zu benutzen ist. Dieses Kommando reicht eigentlich alle Parameter einfach nur an scrjura weiter aber nimmt den Titel als normales Argument und erlaubt weitere Argumente im optionalen Argument zu übergeben
-\newcommand{\jurparagraph}[2][]{%
-\ifthenelse{\isempty{#2}}{\Paragraph{#1}}{\Paragraph{title={#2}, #1}}%
-}
-\newcommand{\jursubparagraph}[2][]{%
-\ifthenelse{\isempty{#2}}{\SubParagraph{#1}}{\SubParagraph{title={#2}, #1}}%
-}
-
-
 \title{Organisationssatzung und zentrale Satzungen\\der Verfassten Studierendenschaft\\des Karlsruher Instituts für Technologie (KIT)}
-\author{}
 \date{Stand: 26. August 2014\\(amtliche Bekanntmachung)}
-
-\usepackage[unicode, pdfusetitle, pdfborder={0 0 0}, bookmarksnumbered]{hyperref}
 
 % Sections sollten für jedes Dokument einzeln gezählt werden. Muss nach hyperref
 % passieren sonst sind die Links falsch.
@@ -120,17 +51,8 @@ Aufgrund von § 65 a Absatz 1 des Gesetzes über die Hochschulen in Baden-Württ
 Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibliche Form verwendet. Dabei ist jede andere Form impliziert. Die Geschlechtsdefinition obliegt jeder Person selbst.
 
 
-% Befehle für Metainformationen
-\makeatletter
-\newcommand*{\@stupadate}{Noch nicht beschlossen}
-\newcommand*{\@publishdate}{Noch nicht veröffentlicht}
-\newcommand*{\@jurchanges}{Noch nicht veröffentlicht}
-\newcommand*{\stupadate}[1]{\renewcommand*{\@stupadate}{#1}}
-\newcommand*{\publishdate}[1]{\renewcommand*{\@publishdate}{#1}}
-\newcommand*{\jurchanges}[1]{\renewcommand*{\@jurchanges}{Eingearbeitete Änderungen:\begin{itemize}#1\end{itemize}}}
-
-
 % Diese Umgebung umschließt das eigentliche Dokument. Argument ist der Titel, optional noch ein Kurztitel
+\makeatletter
 \newenvironment{jurdoc}[2][]{% begin{jurdoc}
 \ifthenelse{\isempty{#1}}{\def\@jurshorttitle{#2}}{\def\@jurshorttitle{#1}}
 
