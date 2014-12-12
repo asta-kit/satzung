@@ -82,10 +82,12 @@ Im Folgenden wird aus Gründen der besseren Lesbarkeit ausschließlich die weibl
 \makeatother
 
 
-\input{vs-satzung/document.core.tex}
-\input{beitragsordnung/document.core.tex}
-\input{wahl-abstimmungsordnung/document.core.tex}
-\input{vs-uebergangsbestimmungen/document.core.tex}
+% Die inputs müssen in geschweifte Klammern damit die Metainformationen nur da
+% drin gelten
+{\input{vs-satzung/document.core.tex}}
+{\input{beitragsordnung/document.core.tex}}
+{\input{wahl-abstimmungsordnung/document.core.tex}}
+{\input{vs-uebergangsbestimmungen/document.core.tex}}
 
 
 \input{impressum.tex}
